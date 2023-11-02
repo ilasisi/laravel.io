@@ -146,8 +146,15 @@
                 </div>
 
                 <div class="w-full block gap-x-4 lg:flex lg:items-center lg:justify-end">
-                    <div class="flex items-center">
-                        <button @click="showSearch($event)" @keyup.window.slash="showSearch($event)" class="hover:text-lio-500">
+                    <div x-data="{        
+                        hotKeyPressed(event) {
+                            if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+                                event.preventDefault();
+                                this.$refs.searchButton.click();
+                            }
+                        },
+                    }" class="flex items-center">
+                        <button x-ref="searchButton" @keydown.window="hotKeyPressed" @click="showSearch($event)" @keyup.window.slash="showSearch($event)" class="hover:text-lio-500">
                             <x-heroicon-o-magnifying-glass class="h-5 w-5 hidden lg:block" />
                         </button>
                         @include('_partials._search')
